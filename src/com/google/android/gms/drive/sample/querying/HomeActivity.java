@@ -29,6 +29,8 @@ import com.google.android.gms.drive.query.SearchableField;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -112,13 +114,18 @@ public class HomeActivity extends BaseDriveActivity
 
     mTitles = getResources().getStringArray(R.array.titles_array);
 
-    mMainDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayoutMain);
     mListViewQueries = (ListView) findViewById(R.id.listViewQueries);
     mListViewQueries.setOnItemClickListener(this);
 
     mListViewFiles = (ListView) findViewById(R.id.listViewFiles);
     mListViewFiles.setAdapter(new ResultsAdapter());
     mListViewFiles.setEmptyView(findViewById(R.id.viewEmpty));
+
+    // enable action bar for home button, so we can open
+    // the left list view for navigation.
+    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getActionBar().setHomeButtonEnabled(true);
+    mMainDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayoutMain);
   }
 
   /**
@@ -140,6 +147,18 @@ public class HomeActivity extends BaseDriveActivity
   private void refresh() {
     DriveFolder root = Drive.DriveApi.getRootFolder();
     root.queryChildren(mGoogleApiClient, sQueries[mSelectedIndex]).addResultCallback(this);
+  }
+
+  /**
+   * Called when user interacts with the action bar. Handles home clicks
+   * to open the navigation drawer for the query selection list view.
+   */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      mMainDrawerLayout.openDrawer(Gravity.LEFT);
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   /**
