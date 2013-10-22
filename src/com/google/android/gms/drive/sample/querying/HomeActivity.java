@@ -37,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An activity that demonstrates sample queries to filter the files on the
@@ -157,8 +158,11 @@ public class HomeActivity extends BaseDriveActivity
    */
   @Override
   public void onChildrenRetrieved(MetadataBufferResult result) {
-    // TODO: handle error cases
-    Log.d(TAG, result.getMetadataBuffer().getCount() + "");
+    if (!result.getStatus().isSuccess()) {
+      Toast.makeText(this, R.string.msg_errorretrieval, Toast.LENGTH_SHORT).show();
+      return;
+    }
+    Log.d(TAG, "Retrieved file count: " + result.getMetadataBuffer().getCount());
     mMetadataBuffer = result.getMetadataBuffer();
     ((ResultsAdapter)mListViewFiles.getAdapter()).notifyDataSetChanged();
   }

@@ -17,6 +17,8 @@
 <resources>
 
     <string name="app_name">Querying Files</string>
+    
+    <string name="msg_errorretrieval">Error while retrieving files</string>
     <string name="msg_noresults">No Results</string>
 
 </resources>
