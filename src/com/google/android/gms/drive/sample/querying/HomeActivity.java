@@ -136,7 +136,7 @@ public class HomeActivity extends BaseDriveActivity
   public void onConnected(Bundle connectionHint) {
     super.onConnected(connectionHint);
     mListViewQueries.setAdapter(
-        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mTitles));
+        new ArrayAdapter<String>(this, R.layout.row_query, mTitles));
     refresh();
   }
 

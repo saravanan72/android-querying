@@ -29,24 +29,46 @@ import android.os.Bundle;
 import android.util.Log;
 
 /**
- * An abstract activity that handles auth and connection to the Drive services.
+ * An abstract activity that handles authorization and
+ * connection to the Drive services.
+ *
+ * @author jbd@google.com (Burcu Dogan)
  */
 public abstract class BaseDriveActivity extends Activity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   private static final String TAG = "BaseDriveActivity";
 
-  protected static final String EXTRA_ACCOUNT_NAME = "accountName";
+  /**
+   * Extra for account name.
+   */
+  protected static final String EXTRA_ACCOUNT_NAME = "account_name";
 
+  /**
+   * Request code for auto gmscore error resolution.
+   */
   protected static final int REQUEST_CODE_RESOLUTION = 1;
 
+  /**
+   * Next available request code.
+   */
   protected static final int NEXT_AVAILABLE_REQUEST_CODE = 2;
 
-  // This variable can only be accessed from the UI thread.
+  /**
+   * Google API client.
+   */
   protected GoogleApiClient mGoogleApiClient;
 
+  /**
+   * Selected account name to authorize the app for and authenticate the client with.
+   */
   protected String mAccountName;
 
+  /**
+   * Called on activity creation. Handlers {@code EXTRA_ACCOUNT_NAME} for handle
+   * if there is one set. Otherwise, looks for the first Google account on the
+   * device and automatically picks it for client connections.
+   */
   @Override
   protected void onCreate(Bundle b) {
     super.onCreate(b);
@@ -67,6 +89,9 @@ public abstract class BaseDriveActivity extends Activity
     }
   }
 
+  /**
+   * Saves the activity state.
+   */
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
@@ -94,6 +119,9 @@ public abstract class BaseDriveActivity extends Activity
     mGoogleApiClient.connect();
   }
 
+  /**
+   * Handles resolution callbacks.
+   */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
