@@ -60,11 +60,13 @@ public class HomeActivity extends BaseDriveActivity
     // files with text/plain mimetype
     new Query.Builder().addFilters(Filters.eq(SearchableField.mimeType(), "text/plain")).build(),
 
-    // at most 10 files
-    new Query.Builder().setMaxResults(10).build(),
-
     // files with a title containing 'a'
     new Query.Builder().addFilters(Filters.contains(SearchableField.title(), "a")).build(),
+
+    // files starred and with text/plain mimetype
+    new Query.Builder().addFilters(Filters.and(
+        Filters.eq(SearchableField.mimeType(), "text/plain"),
+        Filters.eq(SearchableField.starred(), "true"))).build(),
 
     // files on the root folder or full text contains 'Hello'
     new Query.Builder().addFilters(Filters.or(

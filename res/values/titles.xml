@@ -19,8 +19,8 @@
         <item>List files not shared with me</item>
         <item>List files shared with me</item>
         <item>List text files</item>
-        <item>List only 10 files</item>
         <item>List files contains \"a\" in title</item>
+        <item>List starred text files</item>
         <item>List files filtered with an OR query</item>
     </string-array>
 </resources>
