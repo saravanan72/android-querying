@@ -16,11 +16,11 @@
 -->
 <resources>
     <string-array name="titles_array">
-        <item>List files not shared with me</item>
+        <item>List non-text files</item>
         <item>List files shared with me</item>
         <item>List text files</item>
         <item>List files contains \"a\" in title</item>
         <item>List starred text files</item>
-        <item>List files filtered with an OR query</item>
+        <item>List text or html files</item>
     </string-array>
 </resources>

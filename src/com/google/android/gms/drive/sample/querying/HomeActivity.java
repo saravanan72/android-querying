@@ -54,7 +54,8 @@ public class HomeActivity extends BaseDriveActivity
 
   private static Query[] sQueries = new Query[] {
     // files not shared with me
-    new Query.Builder().addFilters(Filters.not(Filters.sharedWithMe())).build(),
+    new Query.Builder().addFilters(Filters.not(
+        Filters.eq(SearchableField.mimeType(), "text/plain"))).build(),
 
     // files shared with me
     new Query.Builder().addFilters(Filters.sharedWithMe()).build(),
@@ -68,11 +69,11 @@ public class HomeActivity extends BaseDriveActivity
     // files starred and with text/plain mimetype
     new Query.Builder().addFilters(Filters.and(
         Filters.eq(SearchableField.mimeType(), "text/plain"),
-        Filters.eq(SearchableField.starred(), "true"))).build(),
+        Filters.eq(SearchableField.starred(), true))).build(),
 
-    // files on the root folder or full text contains 'Hello'
+    // files with text/plain or text/html mimetype
     new Query.Builder().addFilters(Filters.or(
-        Filters.in(SearchableField.parents(), "root"),
+        Filters.eq(SearchableField.mimeType(), "text/html"),
         Filters.eq(SearchableField.mimeType(), "text/plain"))).build()
   };
 
