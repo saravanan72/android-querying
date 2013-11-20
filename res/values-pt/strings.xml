@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
   Copyright 2013 Google, Inc
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +13,11 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
--->
-<resources>
+ -->
 
-    <string name="app_name">Querying Files</string>
-    <string name="msg_errorretrieval">Error while retrieving files</string>
-    <string name="msg_noresults">No Results</string>
-
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="2160134849799212431">"Consultando arquivos"</string>
+    <string name="msg_errorretrieval" msgid="5951658716932049651">"Ocorreu um erro ao recuperar arquivos"</string>
+    <string name="msg_noresults" msgid="2123205212343412562">"Nenhum resultado"</string>
 </resources>
