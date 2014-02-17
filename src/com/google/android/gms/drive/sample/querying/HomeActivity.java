@@ -16,6 +16,17 @@
 
 package com.google.android.gms.drive.sample.querying;
 
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveApi.MetadataBufferResult;
+import com.google.android.gms.drive.Metadata;
+import com.google.android.gms.drive.MetadataBuffer;
+import com.google.android.gms.drive.metadata.StringMetadataField;
+import com.google.android.gms.drive.query.Filters;
+import com.google.android.gms.drive.query.Query;
+import com.google.android.gms.drive.query.SearchableField;
+import com.google.android.gms.drive.widget.DataBufferAdapter;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -31,24 +42,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.MetadataBufferResult;
-import com.google.android.gms.drive.DriveFolder.OnChildrenRetrievedCallback;
-import com.google.android.gms.drive.Metadata;
-import com.google.android.gms.drive.MetadataBuffer;
-import com.google.android.gms.drive.metadata.StringMetadataField;
-import com.google.android.gms.drive.query.Filters;
-import com.google.android.gms.drive.query.Query;
-import com.google.android.gms.drive.query.SearchableField;
-import com.google.android.gms.drive.widget.DataBufferAdapter;
-
 /**
  * An activity that demonstrates sample queries to filter the files on the
  * currently authenticated user's Google Drive. Application is only authorized
  * to query the files it has opened or created.
  */
 public class HomeActivity extends BaseDriveActivity implements
-        OnItemClickListener, OnChildrenRetrievedCallback {
+        OnItemClickListener, ResultCallback<MetadataBufferResult> {
 
     private static final String TAG = "HomeActivity";
 
@@ -151,7 +151,7 @@ public class HomeActivity extends BaseDriveActivity implements
      * the currently selected query.
      */
     private void refresh() {
-        Drive.DriveApi.query(mGoogleApiClient, sQueries[mSelectedIndex]).addResultCallback(this);
+        Drive.DriveApi.query(mGoogleApiClient, sQueries[mSelectedIndex]).setResultCallback(this);
     }
 
     /**
@@ -183,7 +183,7 @@ public class HomeActivity extends BaseDriveActivity implements
      * list view should be re-rendered with the new results.
      */
     @Override
-    public void onChildrenRetrieved(MetadataBufferResult result) {
+    public void onResult(MetadataBufferResult result) {
         if (!result.getStatus().isSuccess()) {
             Toast.makeText(this, R.string.msg_errorretrieval, Toast.LENGTH_SHORT).show();
             return;
@@ -197,7 +197,7 @@ public class HomeActivity extends BaseDriveActivity implements
      * List adapter to provide data to the files list view. If there are no
      * results yet retrieved, it shows no items.
      */
-    private class ResultsAdapter extends DataBufferAdapter<Metadata> {
+    private class ResultsAdapter extends DataBufferAdapter<MetadataBuffer> {
 
         /**
          * Constructor.
