@@ -21,7 +21,6 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.MetadataBufferResult;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
-import com.google.android.gms.drive.metadata.StringMetadataField;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
@@ -68,7 +67,7 @@ public class HomeActivity extends BaseDriveActivity implements
 
             // files with a title containing 'a'
             new Query.Builder().addFilter(
-                    Filters.contains(new StringMetadataField("title"), "a")).build(),
+                    Filters.contains(SearchableField.TITLE, "a")).build(),
 
             // files starred and with text/plain mimetype
             new Query.Builder().addFilter(Filters.and(
@@ -122,7 +121,7 @@ public class HomeActivity extends BaseDriveActivity implements
 
         mListViewQueries = (ListView) findViewById(R.id.listViewQueries);
         mListViewQueries.setAdapter(
-            new ArrayAdapter<String>(this, R.layout.row_query, mTitles));
+                new ArrayAdapter<String>(this, R.layout.row_query, mTitles));
         mListViewQueries.setOnItemClickListener(this);
 
         mListViewFiles = (ListView) findViewById(R.id.listViewFiles);
